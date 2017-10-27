@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <!-- 配置扫描的包 -->
+    <!-- 开启spring 上下文注解支持 -->
+    <context:annotation-config />
+  
+  <!-- 扫描类表，将把标记了@Controller注解的类转换为bean，同时完成bean的注入 -->
+  <context:component-scan base-package="com.CallThink.*"/>
+  <!--
+  <context:component-scan base-package="com.CallThink.ut_http"/>
+   -->
+  
+  <!-- 开启spring mvc注解支持 --> 
+  <mvc:annotation-driven>
+  </mvc:annotation-driven>
+
+    <!-- 默认访问跳转到登录页面(即定义无需Controller的url<->view直接映射) -->  
+    <!-- 如果当前请求为“/”时，则转发到“login.jsp”
+    <mvc:view-controller path="/" view-name="forward:/login/default.jsp"/>   -->
+  
+    <!-- 由于web.xml中设置是：由SpringMVC拦截所有请求,于是在读取静态资源文件的时候就会受到影响(说白了就是读不到) -->  
+    <!-- 经过下面的配置，该标签的作用就是：所有页面中引用"/js/**"的资源，都会从"/resources/js/"里面进行查找 -->  
+    <!-- 我们可以访问http://IP:8080/xxx/js/my.css和http://IP:8080/xxx/resources/js/my.css对比出来 -->  
+    
+ <!--    <mvc:resources mapping="/js/**" location="/resources/js/"/>  
+    <mvc:resources mapping="/css/**" location="/resources/css/"/>  
+    <mvc:resources mapping="/WEB-INF/**" location="/WEB-INF/"/>  
+ -->  
+   <!-- 配置哪些是静态资源，缺省Servlet 直接返回 -->
+<!--     <mvc:resources mapping="/resource" location="/resource" />
+    <mvc:resources mapping="/App_theme/**" location="/App_theme/" cache-period="31556926"/>
+    <mvc:resources mapping="/ui_common/**" location="/ui_common/" cache-period="31556926"/>
+    <mvc:resources mapping="/favicon.ico" location="/favicon.ico" cache-period="31556926"/>
+ -->  
+  <!-- 当上面要访问的静态资源不包括在上面的配置中时，则根据此配置来访问 -->
+  <mvc:default-servlet-handler />
+
+   <!-- 默认视图解析器，配置结果页面 前缀和后缀 -->
+   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="order"  value="10"></property>
+      <property name="contentType" value="text/html" />
+      <property name="prefix"  value="/"/>
+     <property name="suffix"  value=".jsp"/>
+  </bean>
+  
+    <!-- FreeMarker 
+    <bean id="freemarkerResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="1" />
+        <property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html;charset=utf-8" />
+        <property name="viewClass">
+            <value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>
+        </property>
+    </bean>-->
+ 
+ <!--  
+  <bean id="freeMarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+       模板根目录
+       <property name="templateLoaderPath">
+            <value>/WEB-INF/template/</value>
+        </property>
+    
+    编码格式
+    <property name="defaultEncoding" value="utf-8" />
+  </bean>
+ -->  
+   <!-- VIEW RESOLVER -->
+  <!--  <bean id="handlebarsViewResolver" class="com.github.jknack.handlebars.springmvc.HandlebarsViewResolver">
+         <property name="order" value="1" />
+         <property name="suffix" value=".jsp" /> 
+         <property name="contentType" value="text/html;charset=utf-8" />
+         <property name="failOnMissingFile" value="false" />
+         <property name="cache" value="false" />
+   </bean> -->
+  
+ <!-- 文件上传 upload settings，使用 servlet-api 3.0的文件上传，需要选择该项。--> 
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="102400000"></property>
+</bean>
+
+<!--在SpringMVC的配置文件中配置一个自定义拦截器 interceptor setting -->
+<mvc:interceptors>
+     <!-- 多个拦截器，顺序执行 -->  
+     <mvc:interceptor>
+           <mvc:mapping path="/**"/>
+           <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/ui_common/*"/>
+            <mvc:exclude-mapping path="/App_theme/*"/>
+           <bean class="com.CallThink.controller.myInterceptor"></bean>
+    </mvc:interceptor>        
+</mvc:interceptors>
+ </beans>

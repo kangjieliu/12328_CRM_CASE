@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+<!--
+<bean id="jdbcConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+        <value>classpath:config/jdbc.properties</value>
+    </property>
+</bean>
+
+<bean id="dataSource_callthink" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc_callthink.driverClassName}"/>
+    <property name="url" value="${jdbc_callthink.url}"/>
+    <property name="username" value="${jdbc_callthink.username}"/>
+    <property name="password" value="${jdbc_callthink.password}"/>
+    <property name="maxActive" value="${jdbc_callthink.maxActive}"/>
+    <property name="initialSize" value="${jdbc_callthink.initialSize}"/>
+    <property name="maxIdle" value="${jdbc_callthink.maxIdle}"/>
+    <property name="minIdle" value="${jdbc_callthink.minIdle}"/>
+    <property name="timeBetweenEvictionRunsMillis"     value="${jdbc_callthink.timeBetweenEvictionRunsMillis}"/>
+    <property name="minEvictableIdleTimeMillis" value="${jdbc_callthink.minEvictableIdleTimeMillis}"/>
+    <property name="testOnBorrow" value="${jdbc_callthink.testOnBorrow}"/>
+    <property name="validationQuery" value="${jdbc_callthink.validationQuery}"/>
+</bean>
+
+<bean id="jdbcTemplate_callthink" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_callthink"/>
+</bean>
+<bean id="dataSource_crm" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc_crm.driverClassName}"/>
+    <property name="url" value="${jdbc_crm.url}"/>
+    <property name="username" value="${jdbc_crm.username}"/>
+    <property name="password" value="${jdbc_crm.password}"/>
+ </bean>
+
+<bean id="jdbcTemplate_crm" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource_crm"/>
+</bean>
+    <import resource="classpath:spring-shiro.xml"/>
+  -->
+  </beans>

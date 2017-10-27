@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--log4j2
+   日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出
+ -->
+<Configuration status="WARN">
+    <!-- 变量配置 -->
+    <Properties>
+        <property name="log_path">${sys.catalina.home}/logs</property>
+    </Properties>
+ 
+    <!-- appender配置 -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="DailyRollingFile" 
+             fileName="${log_path}/LogCurrent.log"
+             filePattern="${log_path}/$${date:yyyy-MM}/log%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="[%d][%t][%p][%c:%L] %m%n" />
+            <Policies>
+                 <TimeBasedTriggeringPolicy  interval="1"/>
+  　     　　<SizeBasedTriggeringPolicy size="10 MB" /> 
+            </Policies>
+         </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="error" />  
+        <Logger name="org.apache.catalina.startup.VersionLoggerListener.log" level="warn" />  
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />  
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />  
+        <Logger name="org.springframework" level="warn" />  
+        <Logger name="com.github" level="debug" />  
+        <Logger name="org.mongodb.driver" level="error" />
+ 
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="DailyRollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

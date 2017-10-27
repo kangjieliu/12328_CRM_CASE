@@ -1,0 +1,133 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<%@ include file="/ut_controls/PageHeaderMeta.jspf"%>
+<link href="./style_query/treeview.css "  rel="stylesheet" type="text/css">
+<script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+                        var strUrl = rootURL + "/ut_case/case_business_left_tree.aspx";
+                        $('#divContent').load(strUrl);
+                    });
+
+    var m_SelectedNode = null;
+    //点击节点，在主窗口显示，strTitle：标题  strUrl：连接地址  strNodeId：节点号（tnNode.Value）
+    function OnTreeNodeClick(strNodeId, strTitle, strUrl) {
+        SelectNode($("#" + strNodeId)); //取出 Span
+
+        var frmMain = document.getElementById("frm_main");
+        if (frmMain == null) {
+            frmMain = frameElement.lhgDG;
+            if (frmMain == null)
+                return;
+            var strRet = [ {
+                Field : "TYPEID",
+                TypeId : strNodeId
+            } ];
+            onSelect(strRet);
+        } else {
+            if (strUrl == "#")
+                return;
+            $("#frm_main").attr("src", rootURL + strUrl);
+        }
+
+    }
+
+    //选择节点，修改背景色
+    function SelectNode(node) {
+        if (node == null)
+            return;
+        if (m_SelectedNode != null)
+            m_SelectedNode.attr("class", ""); //去掉上一次选择的节点的选择样式
+        node.attr("class", "current"); //给新选择的节点加上选择样式
+        m_SelectedNode = node;
+    }
+
+    // 树展开收缩方法 
+    function Treeview_ExpandCollapse(nodeId) {
+        var ul = $(nodeId).next();
+        if (!ul.length || ul[0].tagName.toLowerCase() != "ul")
+            return;
+        if (ul[0].children.length < 1) //未加载子节点
+            TreeView_PopulateNode(ul[0].id);
+        ul.toggle();
+        $(nodeId).toggleClass("open");
+    }
+    
+    function TreeView_PopulateNode(nodeId) {
+        //console.log(nodeId);
+        var strUrl = rootURL + "/ut_case/case_business_left_tree.aspx?NodeId="+nodeId+"&Pnode=root" ;
+        
+        $('#' + nodeId).load(strUrl);
+    }
+    
+    
+    function GetQueryString(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);
+         if(r!=null)
+             return  unescape(r[2]); 
+         return 0;
+    }
+
+    //选择节点，修改背景色
+    function SelectNode(node) {
+        if (node == null)
+            return;
+        if (m_SelectedNode != null)
+            m_SelectedNode.attr("class", ""); //去掉上一次选择的节点的选择样式
+        node.attr("class", "TreeView_SelectedNodeStyle"); //给新选择的节点加上选择样式
+        m_SelectedNode = node;
+    }
+</script>
+
+<style type="text/css">
+body {
+    background: #f9f9f9;
+    height: 100%;
+    font-size: 14px;
+}
+
+.myTreeView {
+    text-decoration: none;
+}
+
+.myTreeView td {
+    height: 28px;
+    line-height: 28px;
+}
+
+.myTreeView td a {
+    text-decoration: none;
+    color: #444;
+}
+
+.myTreeView td a:hover {
+    font-weight: 500;
+    color: #2772C2;
+}
+
+.myTreeView td a span {
+    border: 0px;
+    cursor: pointer;
+    padding: 5px 4px 4px 4px; /*行间距*/
+}
+</style>
+</head>
+<body>
+    <form id="frmBody" method="post">
+        <div align="left" style="padding-left: 5px;">
+            <div id="divContent" align="left" class="myTreeView "></div>
+    <!--        <asp:TreeView ID="tvList" CssClass="myTreeView" ShowLines="true"
+                ShowExpandCollapse="true" ExpandDepth="0"
+                PopulateNodesFromClient="true"
+                OnTreeNodePopulate="tvList_TreeNodePopulate" /> -->
+        </div>
+    </form>
+</body>
+</html>
+
+
