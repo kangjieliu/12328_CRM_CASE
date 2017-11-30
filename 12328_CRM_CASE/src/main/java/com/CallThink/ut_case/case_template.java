@@ -43,7 +43,8 @@ public class case_template extends UltraCRM_Page {
 
 	public void Page_Load(Object sender, Model model) {
 		pmAgent = fun_main.GetParm();
-		if (IsPostBack == false)// 正被首次加载和访问
+		// 正 被 首 次 加 载 和 访 问
+		if (IsPostBack == false)
 		{
 			int nHistory = 0;
 			pmMap res = fun_main.QuerySplit(Request);
@@ -54,7 +55,8 @@ public class case_template extends UltraCRM_Page {
 				pMenu_id = Functions.ht_Get_strValue("menu_id", htQuery);
 				pCaseId = Functions.ht_Get_strValue("caseId", htQuery);
 				pKey = Functions.ht_Get_strValue("key", htQuery);
-				if (nHistory > 0) // 编辑页面返回
+				// 编辑页面返回
+				if (nHistory > 0) 
 				{
 					String strFilter_temp = Load_ss("pFilter_search");
 					if (strFilter_temp.length() > 0)

@@ -25,7 +25,8 @@ public class case_template_edit extends UltraCRM_Page {
 	my_ToolStrip myToolBar = new my_ToolStrip();
 
 	public void Page_Load(Object sender, Model model) {
-		if (IsPostBack == false)//正被首次加载和访问
+		//正被首次加载和访问
+		if (IsPostBack == false)
         {
             pmMap res = fun_main.QuerySplit(Request);
             int rc=res.nRet;
