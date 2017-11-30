@@ -27,8 +27,10 @@ import com.ToneThink.ctsTools.myUtility.pmMap;
  * @Description 设定模板页
  */
 public class case_template extends UltraCRM_Page {
-	private String pTableName = "CRM_TEMPLATE";// 选择文本模板
-	private String m_Filter_search = ""; // 本页面人工选择的查询条件，会话需要保存在Session中
+	//选择文本模板
+	private String pTableName = "CRM_TEMPLATE";
+	// 本页面人工选择的查询条件，会话需要保存在Session中
+	private String m_Filter_search = ""; 
 	my_SearchField mySearch = new my_SearchField(3);
 //	private String pContent = "";
 	private String pMenu_id = "";
