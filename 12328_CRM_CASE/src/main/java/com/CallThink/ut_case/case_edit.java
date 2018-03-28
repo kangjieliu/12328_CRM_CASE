@@ -61,8 +61,7 @@ public class case_edit extends UltraCRM_Page {
 										// //备注:工单显示3列会使排版很拥挤，不好看，所以还用2列，gaoww
 	my_ToolStrip myToolBar = new my_ToolStrip();
 
-	DataTable dtButton_custom = new DataTable(); // add by gaoww 20151126
-													// 增加工单自定义button处理
+	DataTable dtButton_custom = new DataTable(); 
 
 	private String m_Submit_res; // 提交返回结果
 
