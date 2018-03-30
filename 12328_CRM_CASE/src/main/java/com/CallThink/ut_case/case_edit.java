@@ -93,11 +93,7 @@ public class case_edit extends UltraCRM_Page {
 			pCaseId = Load_vs("pCaseId");
 			pCaseId_Rel = Load_vs("pCaseId_Rel");
 			pFrom = Load_vs("pFrom");
-			dtButton_custom = Load_vs("dtButton_custom", DataTable.class); // add
-																			// by
-																			// gaoww
-																			// 20151126
-																			// 增加自定义button功能
+			dtButton_custom = Load_vs("dtButton_custom", DataTable.class); 
 		}
 
 		myCase = new case_set_info(pType);
